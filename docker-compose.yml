@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: fithub-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - fithub-network
+
+  backend:
+    build: ./backend
+    container_name: fithub-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URI=mongodb://root:password@mongodb:27017/fithub-crm
+      - PORT=5000
+      - NODE_ENV=development
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/app
+    networks:
+      - fithub-network
+
+  frontend:
+    build: ./frontend
+    container_name: fithub-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+    networks:
+      - fithub-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  fithub-network:
+    driver: bridge

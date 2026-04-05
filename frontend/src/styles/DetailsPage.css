@@ -1,0 +1,24 @@
+/* Details Pages */
+.details-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-back {
+  /* Defined in index.css */
+  margin-bottom: 20px;
+}
+
+.details-container h1 {
+  color: #2c3e50;
+  margin: 20px 0;
+}
+
+.details-container p {
+  color: #7f8c8d;
+  font-size: 14px;
+}
